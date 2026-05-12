@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yajat Mittal — Portfolio</title>
+  <meta name="description" content="AI/ML & Software Dev. Building things at the intersection of AI and real-world impact." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0f0f0d;
+      --bg2: #141412;
+      --card: #1c1c19;
+      --card-border: #2a2a26;
+      --text: #f0ede8;
+      --text2: #8a8780;
+      --text3: #4a4845;
+      --acc: #e8c84a;
+      --acc-glow: rgba(232, 200, 74, 0.1);
+      --tag-bg: #222220;
+      --tag-text: #8a8780;
+      --scroll-thumb: #333330;
+    }
+
+    [data-light] {
+      --bg: #f7f6f2;
+      --bg2: #eeecea;
+      --card: #ffffff;
+      --card-border: #e2e0da;
+      --text: #1a1916;
+      --text2: #6b6860;
+      --text3: #a8a59e;
+      --acc: #1a1916;
+      --acc-glow: rgba(26, 25, 22, 0.06);
+      --tag-bg: #eeece8;
+      --tag-text: #6b6860;
+      --scroll-thumb: #d0cec8;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      transition: background 0.25s, color 0.25s;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .shell {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 3rem;
+    }
+
+    /* ── Top bar ── */
+    .topbar {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 2rem;
+    }
+
+    .toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--text2);
+      cursor: pointer;
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      padding: 0.4rem 0.85rem;
+      border-radius: 999px;
+      transition: all 0.2s;
+      user-select: none;
+    }
+
+    .toggle:hover { color: var(--text); border-color: var(--text3); }
+
+    .toggle-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--acc);
+      transition: background 0.25s;
+      flex-shrink: 0;
+    }
+
+    /* ── Profile ── */
+    .profile {
+      display: flex;
+      gap: 1.25rem;
+      align-items: flex-start;
+      margin-bottom: 1.75rem;
+    }
+
+    .avatar {
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      border: 2px solid var(--card-border);
+      object-fit: cover;
+      flex-shrink: 0;
+      background: var(--bg2);
+    }
+
+    .profile-right { flex: 1; padding-top: 4px; }
+
+    .name {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      color: var(--text);
+      margin-bottom: 0.2rem;
+    }
+
+    .handle {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--acc);
+      margin-bottom: 0.55rem;
+      letter-spacing: 0.02em;
+    }
+
+    .bio {
+      font-size: 0.83rem;
+      line-height: 1.65;
+      color: var(--text2);
+    }
+
+    /* ── Skill chips ── */
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 2rem;
+    }
+
+    .chip {
+      font-size: 0.7rem;
+      font-weight: 500;
+      padding: 0.28rem 0.7rem;
+      border-radius: 999px;
+      background: var(--tag-bg);
+      color: var(--tag-text);
+      border: 1px solid var(--card-border);
+      letter-spacing: 0.025em;
+      transition: border-color 0.15s;
+    }
+
+    .chip:hover { border-color: var(--text3); }
+
+    /* ── Section header ── */
+    .row-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .row-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--acc);
+      white-space: nowrap;
+    }
+
+    .row-line { flex: 1; height: 1px; background: var(--card-border); }
+
+    /* ── Project grid ── */
+    .pgrid-wrap {
+      max-height: 540px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding-right: 6px;
+      padding-bottom: 4px;
+      scrollbar-width: thin;
+      scrollbar-color: var(--scroll-thumb) transparent;
+    }
+
+    .pgrid-wrap::-webkit-scrollbar { width: 3px; }
+    .pgrid-wrap::-webkit-scrollbar-track { background: transparent; }
+    .pgrid-wrap::-webkit-scrollbar-thumb { background: var(--scroll-thumb); border-radius: 2px; }
+
+    .pgrid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+    }
+
+    .pcard {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 1.1rem 1.15rem 1rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .pcard:hover { border-color: var(--acc); transform: translateY(-2px); }
+
+    .pcard-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .pcard-icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      background: var(--acc-glow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.95rem;
+    }
+
+    .pcard-gh {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      border: 1px solid var(--card-border);
+      color: var(--text2);
+      text-decoration: none;
+      transition: all 0.15s;
+    }
+
+    .pcard-gh:hover { border-color: var(--acc); color: var(--acc); }
+    .pcard-gh svg { width: 12px; height: 12px; fill: currentColor; }
+
+    .badge {
+      display: inline-block;
+      font-size: 0.58rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      background: var(--acc-glow);
+      color: var(--acc);
+      border: 1px solid var(--acc);
+      margin-bottom: 0.4rem;
+    }
+
+    .pcard-name {
+      font-weight: 600;
+      font-size: 0.9rem;
+      letter-spacing: -0.015em;
+      color: var(--text);
+      margin-bottom: 0.3rem;
+      line-height: 1.2;
+    }
+
+    .pcard-desc {
+      font-size: 0.75rem;
+      line-height: 1.6;
+      color: var(--text2);
+      margin-bottom: 0.75rem;
+    }
+
+    .pcard-stack { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+
+    .tech {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      padding: 0.18rem 0.5rem;
+      border-radius: 4px;
+      background: var(--tag-bg);
+      color: var(--tag-text);
+      border: 1px solid var(--card-border);
+    }
+
+    /* ── Contact ── */
+    .contact {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--card-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .contact-left {
+      font-size: 0.8rem;
+      color: var(--text2);
+      line-height: 1.5;
+    }
+
+    .contact-left strong { color: var(--text); font-weight: 600; }
+
+    .clinks { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+    .clink {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.73rem;
+      font-weight: 500;
+      padding: 0.4rem 0.85rem;
+      border-radius: 8px;
+      border: 1px solid var(--card-border);
+      color: var(--text2);
+      text-decoration: none;
+      background: var(--card);
+      transition: all 0.15s;
+    }
+
+    .clink:hover { color: var(--text); border-color: var(--acc); background: var(--acc-glow); }
+    .clink svg { width: 13px; height: 13px; fill: currentColor; flex-shrink: 0; }
+
+    /* ── Responsive ── */
+
+    /* Tablet: side-by-side still works but tighten up */
+    @media (max-width: 600px) {
+      .shell { padding: 1.5rem 1rem 2.5rem; }
+
+      .name { font-size: 1.3rem; }
+
+      .pgrid-wrap { max-height: none; overflow: visible; padding-right: 0; }
+
+      .pgrid { grid-template-columns: 1fr; gap: 0.75rem; }
+
+      .pcard { padding: 1rem; }
+    }
+
+    /* Mobile: stack everything */
+    @media (max-width: 480px) {
+      .shell { padding: 1.25rem 0.9rem 2rem; }
+
+      .profile { flex-direction: column; gap: 0.9rem; align-items: center; text-align: center; }
+
+      .profile-right { padding-top: 0; }
+
+      .bio { max-width: 100%; }
+
+      .chips { justify-content: center; }
+
+      .contact { flex-direction: column; align-items: flex-start; }
+
+      .clinks { gap: 0.4rem; }
+
+      .clink { padding: 0.45rem 0.75rem; font-size: 0.7rem; }
+    }
+
+    /* Very small screens */
+    @media (max-width: 360px) {
+      .name { font-size: 1.15rem; }
+      .handle { font-size: 0.62rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- Theme toggle -->
+  <div class="topbar">
+    <div class="toggle" id="tog" onclick="toggleMode()">
+      <div class="toggle-dot"></div>
+      <span id="tog-label">Dark mode</span>
+    </div>
+  </div>
+
+  <!-- Profile -->
+  <div class="profile">
+    <img class="avatar" src="https://avatars.githubusercontent.com/u/59126036?v=4" alt="Yajat Mittal" />
+    <div class="profile-right">
+      <div class="name">Yajat Mittal</div>
+      <div class="handle">@YajatMittal · AI/ML &amp; Software Dev · 17</div>
+      <p class="bio">Building things at the intersection of AI and real-world impact. From CNNs and hackathons to full-stack apps — I ship fast, learn faster.</p>
+    </div>
+  </div>
+
+  <!-- Skill chips -->
+  <div class="chips">
+    <span class="chip">Machine Learning</span>
+    <span class="chip">Python</span>
+    <span class="chip">TypeScript</span>
+    <span class="chip">Computer Vision</span>
+    <span class="chip">Hackathons</span>
+    <span class="chip">iOS Dev</span>
+    <span class="chip">React Native</span>
+  </div>
+
+  <!-- Projects -->
+  <div class="row-header">
+    <span class="row-label">Projects</span>
+    <div class="row-line"></div>
+  </div>
+
+  <div class="pgrid-wrap">
+    <div class="pgrid" id="pgrid"></div>
+  </div>
+
+  <!-- Contact -->
+  <div class="contact">
+    <div class="contact-left">Open to <strong>collabs, internships &amp; cool ideas</strong></div>
+    <div class="clinks">
+      <a href="https://github.com/YajatMittal" class="clink" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+        GitHub
+      </a>
+      <a href="https://www.linkedin.com/in/yajat-mittal/" class="clink" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        LinkedIn
+      </a>
+      <a href="mailto:yajatmittal@email.com" class="clink">
+        <svg viewBox="0 0 24 24"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/></svg>
+        Email
+      </a>
+    </div>
+  </div>
+
+</div><!-- /shell -->
+
+<script>
+  const ghSvg = `<svg viewBox="0 0 24 24" style="width:12px;height:12px;fill:currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>`;
+
+  const projects = [
+    { icon: "🩺", badge: "Hackathon · HackTheNorth", name: "Mask Detector",        desc: "Real-time face mask detection ML model built at Hack The North 2021 with my team. Computer vision using CNNs.",                          stack: ["Python","TensorFlow","OpenCV","Jupyter"],           url: "https://github.com/YajatMittal/Mask-Detector" },
+    { icon: "🔬", badge: "ML · Health",              name: "Skin Cancer Detection", desc: "CNN classifying malignant vs benign skin lesions — trained on 3,000+ images with 79% test accuracy.",                                       stack: ["Python","TensorFlow","Keras","Kaggle"],             url: "https://github.com/YajatMittal/Skin-Cancer-Detection" },
+    { icon: "🧠", badge: "Full-Stack · AI",           name: "Memoria",               desc: "AI-powered memory & journaling app with a TypeScript/React Native frontend and Python image-to-text backend.",                                stack: ["TypeScript","React Native","Python","Flask"],       url: "https://github.com/YajatMittal/Memoria" },
+    { icon: "🌤", badge: "iOS · Swift",               name: "WeatherSphere",         desc: "Native iOS weather app with live forecasts and location-aware data. Clean, minimal UI built in Swift.",                                       stack: ["Swift","Xcode","REST APIs"],                        url: "https://github.com/YajatMittal/WeatherSphere" },
+    { icon: "🎮", badge: "Web",                       name: "Quiz Game",             desc: "Interactive multi-choice quiz with instant feedback, score tracking, progress bar and a responsive UI.",                                      stack: ["HTML","CSS","JavaScript"],                         url: "https://github.com/YajatMittal/Quiz-Game" },
+    { icon: "🌐", badge: "Portfolio",                 name: "Personal Website",      desc: "My personal website built from scratch with vanilla JS, HTML & CSS — hosted on GitHub Pages.",                                               stack: ["HTML","CSS","JavaScript"],                         url: "https://github.com/YajatMittal/yajatmittal.github.io" },
+  ];
+
+  document.getElementById('pgrid').innerHTML = projects.map(p => `
+    <div class="pcard">
+      <div class="pcard-top">
+        <div class="pcard-icon">${p.icon}</div>
+        <a href="${p.url}" class="pcard-gh" target="_blank" rel="noopener noreferrer" aria-label="View ${p.name} on GitHub">${ghSvg}</a>
+      </div>
+      ${p.badge ? `<div class="badge">${p.badge}</div>` : ''}
+      <div class="pcard-name">${p.name}</div>
+      <div class="pcard-desc">${p.desc}</div>
+      <div class="pcard-stack">${p.stack.map(t => `<span class="tech">${t}</span>`).join('')}</div>
+    </div>
+  `).join('');
+
+  let light = false;
+  function toggleMode() {
+    light = !light;
+    if (light) document.body.setAttribute('data-light', '');
+    else        document.body.removeAttribute('data-light');
+    document.getElementById('tog-label').textContent = light ? 'Light mode' : 'Dark mode';
+  }
+</script>
+
+</body>
+</html>
