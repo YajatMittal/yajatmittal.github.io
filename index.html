@@ -435,13 +435,79 @@
 <script>
   const ghSvg = `<svg viewBox="0 0 24 24" style="width:12px;height:12px;fill:currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>`;
 
+  // const projects = [
+  //   { icon: "🩺", badge: "Hackathon · HackTheNorth", name: "Mask Detector",        desc: "Real-time face mask detection ML model built at Hack The North 2021 with my team. Computer vision using CNNs.",                          stack: ["Python","TensorFlow","OpenCV","Jupyter"],           url: "https://github.com/YajatMittal/Mask-Detector" },
+  //   { icon: "🔬", badge: "ML · Health",              name: "Skin Cancer Detection", desc: "CNN classifying malignant vs benign skin lesions — trained on 3,000+ images with 79% test accuracy.",                                       stack: ["Python","TensorFlow","Keras","Kaggle"],             url: "https://github.com/YajatMittal/Skin-Cancer-Detection" },
+  //   { icon: "🧠", badge: "Full-Stack · AI",           name: "Memoria",               desc: "AI-powered memory & journaling app with a TypeScript/React Native frontend and Python image-to-text backend.",                                stack: ["TypeScript","React Native","Python","Flask"],       url: "https://github.com/YajatMittal/Memoria" },
+  //   { icon: "🌤", badge: "iOS · Swift",               name: "WeatherSphere",         desc: "Native iOS weather app with live forecasts and location-aware data. Clean, minimal UI built in Swift.",                                       stack: ["Swift","Xcode","REST APIs"],                        url: "https://github.com/YajatMittal/WeatherSphere" },
+  //   { icon: "🎮", badge: "Web",                       name: "Quiz Game",             desc: "Interactive multi-choice quiz with instant feedback, score tracking, progress bar and a responsive UI.",                                      stack: ["HTML","CSS","JavaScript"],                         url: "https://github.com/YajatMittal/Quiz-Game" },
+  //   { icon: "🌐", badge: "Portfolio",                 name: "Personal Website",      desc: "My personal website built from scratch with vanilla JS, HTML & CSS — hosted on GitHub Pages.",                                               stack: ["HTML","CSS","JavaScript"],                         url: "https://github.com/YajatMittal/yajatmittal.github.io" },
+  // ];
   const projects = [
-    { icon: "🩺", badge: "Hackathon · HackTheNorth", name: "Mask Detector",        desc: "Real-time face mask detection ML model built at Hack The North 2021 with my team. Computer vision using CNNs.",                          stack: ["Python","TensorFlow","OpenCV","Jupyter"],           url: "https://github.com/YajatMittal/Mask-Detector" },
-    { icon: "🔬", badge: "ML · Health",              name: "Skin Cancer Detection", desc: "CNN classifying malignant vs benign skin lesions — trained on 3,000+ images with 79% test accuracy.",                                       stack: ["Python","TensorFlow","Keras","Kaggle"],             url: "https://github.com/YajatMittal/Skin-Cancer-Detection" },
-    { icon: "🧠", badge: "Full-Stack · AI",           name: "Memoria",               desc: "AI-powered memory & journaling app with a TypeScript/React Native frontend and Python image-to-text backend.",                                stack: ["TypeScript","React Native","Python","Flask"],       url: "https://github.com/YajatMittal/Memoria" },
-    { icon: "🌤", badge: "iOS · Swift",               name: "WeatherSphere",         desc: "Native iOS weather app with live forecasts and location-aware data. Clean, minimal UI built in Swift.",                                       stack: ["Swift","Xcode","REST APIs"],                        url: "https://github.com/YajatMittal/WeatherSphere" },
-    { icon: "🎮", badge: "Web",                       name: "Quiz Game",             desc: "Interactive multi-choice quiz with instant feedback, score tracking, progress bar and a responsive UI.",                                      stack: ["HTML","CSS","JavaScript"],                         url: "https://github.com/YajatMittal/Quiz-Game" },
-    { icon: "🌐", badge: "Portfolio",                 name: "Personal Website",      desc: "My personal website built from scratch with vanilla JS, HTML & CSS — hosted on GitHub Pages.",                                               stack: ["HTML","CSS","JavaScript"],                         url: "https://github.com/YajatMittal/yajatmittal.github.io" },
+    {
+      icon: "🍎",
+      badge: "AI · Computer Vision · Full-Stack",
+      name: "SnackTrack",
+      desc: "Real-time computer vision web app that detects food items through a webcam and gamifies eating habits with a points system. Built with a full HTML/CSS/JS frontend and a Python + OpenCV detection pipeline powered by Roboflow.",
+      stack: ["HTML", "CSS", "JavaScript", "Python", "OpenCV", "Roboflow"],
+      url: "https://github.com/YajatMittal/SnackTrack"
+    },
+    {
+      icon: "📊",
+      badge: "AI · Computer Vision",
+      name: "Tabula",
+      desc: "End-to-end system that converts a breadboard photo into a fully routed PCB using computer vision and LLMs. Automatically generates KiCad schematics and layouts from a single image input.",
+      stack: ["Python", "OpenCV", "FastAPI", "React", "Roboflow", "Gemini"],
+      url: "https://github.com/YajatMittal/Tabula"
+    },
+    {
+      icon: "🏃",
+      badge: "Game · Web · JavaScript",
+      name: "Flappy-Fitness",
+      desc: "Gamified Flappy Bird–style web game that encourages movement and engagement through interactive fitness-based mechanics. Built entirely with vanilla HTML, CSS, and JavaScript.",
+      stack: ["HTML", "CSS", "JavaScript"],
+      url: "https://github.com/YajatMittal/Flappy-Fitness"
+    },
+    {
+      icon: "🔬",
+      badge: "ML · Health",
+      name: "Skin Cancer Detection",
+      desc: "CNN classifying malignant vs benign skin lesions — trained on 3,000+ images with 79% test accuracy.",
+      stack: ["Python", "TensorFlow", "Keras", "Kaggle"],
+      url: "https://github.com/YajatMittal/Skin-Cancer-Detection"
+    },
+    {
+      icon: "🧠",
+      badge: "Full-Stack · AI",
+      name: "Memoria",
+      desc: "AI-powered memory & journaling app with a TypeScript/React Native frontend and Python image-to-text backend.",
+      stack: ["TypeScript", "React Native", "Python", "Flask"],
+      url: "https://github.com/YajatMittal/Memoria"
+    },
+    {
+      icon: "🌤",
+      badge: "iOS · Swift",
+      name: "WeatherSphere",
+      desc: "Native iOS weather app with live forecasts and location-aware data. Clean, minimal UI built in Swift.",
+      stack: ["Swift", "Xcode", "REST APIs"],
+      url: "https://github.com/YajatMittal/WeatherSphere"
+    },
+    {
+      icon: "🎮",
+      badge: "Web",
+      name: "Quiz Game",
+      desc: "Interactive multi-choice quiz with instant feedback, score tracking, progress bar and a responsive UI.",
+      stack: ["HTML", "CSS", "JavaScript"],
+      url: "https://github.com/YajatMittal/Quiz-Game"
+    },
+    {
+      icon: "🩺",
+      badge: "Hackathon · HackTheNorth",
+      name: "Mask Detector",
+      desc: "Real-time face mask detection ML model built at Hack The North 2021 with my team. Computer vision using CNNs.",
+      stack: ["Python", "TensorFlow", "OpenCV", "Jupyter"],
+      url: "https://github.com/YajatMittal/Mask-Detector"
+    },
   ];
 
   document.getElementById('pgrid').innerHTML = projects.map(p => `
