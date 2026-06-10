@@ -47,7 +47,7 @@ const PROJECTS = [
   tagline: "Real-time snack detection · Roboflow + Flask",
   tags: ["Python", "Flask", "OpenCV", "Roboflow"],
   href: "https://github.com/YajatMittal/SnackTrack",
-  cover: { video: "assets/projects/videos/SnackTrack.mp4", poster: "assets/projects/images/snacktrack.png", crop: { scale: 1.12, originY: "34%" } }
+  cover: { video: "assets/projects/videos/SnackTrack.mp4", poster: "assets/projects/images/snacktrack.jpg", crop: { scale: 1.12, originY: "34%" } }
 },
 {
   name: "Memoria",
@@ -63,7 +63,7 @@ const PROJECTS = [
   tagline: "Breadboard photo → PCB · EurekaHacks",
   tags: ["Python", "Computer Vision", "Gemini", "React"],
   href: "https://github.com/YajatMittal/Tabula",
-  cover: { video: "assets/projects/videos/tabula.mp4", crop: { scale: 1.05, originY: "100%" } }
+  cover: { video: "assets/projects/videos/tabula.mp4", poster: "assets/projects/images/tabula.jpg", crop: { scale: 1.05, originY: "100%" } }
 },
 {
   name: "Flappy Fitness",
@@ -79,7 +79,7 @@ const PROJECTS = [
   tagline: "Native iOS weather app · Swift",
   tags: ["Swift", "iOS", "UIKit", "API"],
   href: "https://github.com/YajatMittal/WeatherSphere",
-  cover: { video: "assets/projects/videos/WeatherSphere.mp4" }
+  cover: { video: "assets/projects/videos/WeatherSphere.mp4", poster: "assets/projects/images/weathersphere.jpg" }
 },
 {
   name: "Skin Cancer Detection",
