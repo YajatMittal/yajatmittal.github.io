@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Yajat Mittal</title>
+<link rel="icon" type="image/png" href="assets/favicon.png" />
+<link rel="apple-touch-icon" href="assets/favicon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Alex+Brush&display=swap" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="splash" class="loader" role="presentation">
+    <div class="loader-inner">
+      <div class="loader-eyebrow">portfolio</div>
+      <div class="loader-sign">Yajat Mittal</div>
+      <div class="loader-rule">
+        <span class="loader-line"></span>
+        <span class="loader-dot"></span>
+      </div>
+      <div class="loader-tag">welcome</div>
+    </div>
+  </div>
+  <script src="src/splash.js"></script>
+  <div class="bg"></div>
+  <div class="spotlight"></div>
+  <canvas class="cursor-brush"></canvas>
+  <div class="dot-spot"></div>
+  <div class="cursor-ring"></div>
+  <div class="trail-dot t1"></div>
+  <div class="trail-dot t2"></div>
+  <div class="trail-dot t3"></div>
+  <div class="grain"></div>
+  <div id="app"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <!-- App modules — compiled in order by Babel; each exports to window so later files can use them -->
+  <script type="text/babel" data-presets="react" src="src/tweaks-panel.jsx"></script>
+  <script type="text/babel" data-presets="react" src="src/data.jsx"></script>
+  <script type="text/babel" data-presets="react" src="src/icons.jsx"></script>
+  <script type="text/babel" data-presets="react" src="src/sections.jsx"></script>
+  <script type="text/babel" data-presets="react" src="src/app.jsx"></script>
+</body>
+</html>
