@@ -4,6 +4,15 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Yajat Mittal</title>
+<!-- Critical CSS applied on the very first frame, before the render-blocking
+     styles.css loads. Paints the dark background (no white flash) and makes the
+     splash a full-screen dark layer with its text hidden until JS adds .armed —
+     otherwise the splash markup flashes as raw unstyled text before the reveal. -->
+<style>
+  html{background:#0e0e13;}
+  #splash{position:fixed;inset:0;z-index:200;background:#0e0e13;}
+  #splash:not(.armed) .loader-inner{opacity:0;}
+</style>
 <link rel="icon" type="image/png" href="assets/favicon.png" />
 <link rel="apple-touch-icon" href="assets/favicon.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />

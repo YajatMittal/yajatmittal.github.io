@@ -219,7 +219,7 @@ function ProjVideoCover({ id }) {
   // card stays a single link to the project.
   return (
     <div className="proj-cover">
-      <img className="cover-img" src={thumb} alt="" loading="lazy" onLoad={onThumbLoad} />
+      <img className="cover-img" src={thumb} alt="" decoding="sync" onLoad={onThumbLoad} />
       <div className={"cover-yt-mount" + (playing ? " is-playing" : "")} ref={mountRef} />
     </div>);
 }
@@ -262,7 +262,7 @@ function ProjCover({ cover }) {
   if (cover.img) {
     return (
       <div className="proj-cover">
-        <img className="cover-img" src={cover.img} alt="" loading="lazy" />
+        <img className="cover-img" src={cover.img} alt="" decoding="sync" />
       </div>);
 
   }
@@ -329,7 +329,7 @@ function Blog() {
         {BLOG.map((b) =>
         <a key={b.title} className="blog-card" href={b.href} target="_blank" rel="noreferrer">
             <div className="blog-cover">
-              <img src={b.cover} alt="" loading="lazy" />
+              <img src={b.cover} alt="" decoding="sync" />
             </div>
             <div>
               <div className="blog-title">{b.title}</div>
