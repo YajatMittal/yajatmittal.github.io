@@ -3,3 +3,6 @@
 
 # Editor/auto-generated preview
 .thumbnail
+
+# Next.js build output
+/.next/
