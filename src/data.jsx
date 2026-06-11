@@ -7,7 +7,7 @@ const ABOUT = {
   <>
       I’m an 18-year-old working at the intersection of  <b>computer vision</b>, <b>machine learning</b>, and <b>real-world applications</b>.
 
- Incoming   <a href="https://uwaterloo.ca/computer-science/" target="_blank" rel="noreferrer"><b><span className="nobreak"><img className="inline-logo coin" src="assets/icons/waterloo.png" alt="" />CS</span> @ University of Waterloo</b></a>, and currently a contributor at   <a href="https://roboflow.com" target="_blank" rel="noreferrer"><span className="nobreak"><img className="inline-logo round" src="assets/icons/roboflow.png" alt="" />Roboflow</span></a>, writing technical tutorials on computer vision projects. 
+ Incoming   <a href="https://uwaterloo.ca/computer-science/" target="_blank" rel="noreferrer"><b><span className="nobreak"><img className="inline-logo coin" src="assets/icons/waterloo.png" alt="" />CS</span> @ University of Waterloo</b></a>, and currently a contributor at   <a href="https://blog.roboflow.com/author/yajat/" target="_blank" rel="noreferrer"><span className="nobreak"><img className="inline-logo round" src="assets/icons/roboflow.png" alt="" />Roboflow</span></a>, writing technical tutorials on computer vision projects. 
     </>,
 
   skills: [
@@ -95,6 +95,14 @@ const FEATURED_NAMES = ["SnackTrack", "Tabula", "Memoria"];
 
 
 const BLOG = [
+{
+  title: "Give My Agent Eyes: Build a No-Code Vision Agent",
+  desc: "How to give an AI agent sight: pairing an object-detection model with a multimodal LLM in a no-code Roboflow workflow so it can perceive, reason about, and act on what it sees.",
+  date: "June 11, 2026",
+  tag: "Computer Vision",
+  href: "https://blog.roboflow.com/give-my-agent-eyes/",
+  cover: "https://storage.ghost.io/c/2c/8d/2c8d8c0d-1c15-4b6d-825e-02b78d61d40a/content/images/size/w1200/2026/06/Screenshot-2026-06-11-at-9.15.38---AM.png"
+},
 {
   title: "Automate PPE Detection with RF-DETR & Roboflow",
   desc: "How to build a real-time worker-safety pipeline: RF-DETR + ByteTrack + a custom Python block to live-count safe vs. unsafe workers on construction footage.",
