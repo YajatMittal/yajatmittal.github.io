@@ -101,7 +101,7 @@ const BLOG = [
   date: "June 11, 2026",
   tag: "Computer Vision",
   href: "https://blog.roboflow.com/give-my-agent-eyes/",
-  cover: "https://storage.ghost.io/c/2c/8d/2c8d8c0d-1c15-4b6d-825e-02b78d61d40a/content/images/size/w1200/2026/06/Screenshot-2026-06-11-at-9.15.38---AM.png"
+  cover: "assets/blog/give-my-agent-eyes.png"
 },
 {
   title: "Automate PPE Detection with RF-DETR & Roboflow",
@@ -109,7 +109,7 @@ const BLOG = [
   date: "May 18, 2026",
   tag: "Computer Vision",
   href: "https://blog.roboflow.com/ppe-detection/",
-  cover: "https://storage.ghost.io/c/2c/8d/2c8d8c0d-1c15-4b6d-825e-02b78d61d40a/content/images/size/w1200/2026/05/Screenshot-2026-05-18-at-12.12.54---PM.png"
+  cover: "assets/blog/ppe-detection.png"
 }];
 
 
