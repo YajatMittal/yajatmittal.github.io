@@ -96,6 +96,14 @@ const FEATURED_NAMES = ["SnackTrack", "Tabula", "Memoria"];
 
 const BLOG = [
 {
+  title: "How to Build a Promptable Object Detection Project",
+  desc: "How to detect and count objects using text prompts instead of a training dataset — using Meta's SAM 3 to spot soda cans on retail shelves with zero custom training.",
+  date: "June 29, 2026",
+  tag: "Computer Vision",
+  href: "https://blog.roboflow.com/build-a-promptable-object-detection-project/",
+  cover: "assets/blog/promptable-object-detection.png"
+},
+{
   title: "Give My Agent Eyes: Build a No-Code Vision Agent",
   desc: "How to give an AI agent sight: pairing an object-detection model with a multimodal LLM in a no-code Roboflow workflow so it can perceive, reason about, and act on what it sees.",
   date: "June 11, 2026",
