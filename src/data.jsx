@@ -96,6 +96,14 @@ const FEATURED_NAMES = ["SnackTrack", "Tabula", "Memoria"];
 
 const BLOG = [
 {
+  title: "Defect Inspection AI: Automating Quality Control",
+  desc: "How computer vision automates manufacturing quality control — pairing object detection with a vision-language model to identify, classify, and report product defects in real time, using PCB inspection as the example.",
+  date: "July 1, 2026",
+  tag: "Computer Vision",
+  href: "https://blog.roboflow.com/defect-inspection/",
+  cover: "assets/blog/defect-inspection.png"
+},
+{
   title: "How to Build a Promptable Object Detection Project",
   desc: "How to detect and count objects using text prompts instead of a training dataset — using Meta's SAM 3 to spot soda cans on retail shelves with zero custom training.",
   date: "June 29, 2026",
