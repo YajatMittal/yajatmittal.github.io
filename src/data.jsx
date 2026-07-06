@@ -71,7 +71,7 @@ const PROJECTS = [
   tagline: "Pose-controlled Flappy Bird · StarterHacks",
   tags: ["Python", "MediaPipe", "PyGame", "SocketIO"],
   href: "https://github.com/YajatMittal/Flappy-Fitness",
-  cover: { img: "assets/projects/images/flappybird.png" }
+  cover: { img: "assets/projects/images/flappybird.jpg" }
 },
 {
   name: "WeatherSphere",
@@ -101,7 +101,7 @@ const BLOG = [
   date: "July 1, 2026",
   tag: "Computer Vision",
   href: "https://blog.roboflow.com/defect-inspection/",
-  cover: "assets/blog/defect-inspection.png"
+  cover: "assets/blog/defect-inspection.jpg"
 },
 {
   title: "How to Build a Promptable Object Detection Project",
@@ -109,7 +109,7 @@ const BLOG = [
   date: "June 29, 2026",
   tag: "Computer Vision",
   href: "https://blog.roboflow.com/build-a-promptable-object-detection-project/",
-  cover: "assets/blog/promptable-object-detection.png"
+  cover: "assets/blog/promptable-object-detection.jpg"
 },
 {
   title: "Give My Agent Eyes: Build a No-Code Vision Agent",
@@ -117,7 +117,7 @@ const BLOG = [
   date: "June 11, 2026",
   tag: "Computer Vision",
   href: "https://blog.roboflow.com/give-my-agent-eyes/",
-  cover: "assets/blog/give-my-agent-eyes.png"
+  cover: "assets/blog/give-my-agent-eyes.jpg"
 },
 {
   title: "Automate PPE Detection with RF-DETR & Roboflow",
@@ -125,7 +125,7 @@ const BLOG = [
   date: "May 18, 2026",
   tag: "Computer Vision",
   href: "https://blog.roboflow.com/ppe-detection/",
-  cover: "assets/blog/ppe-detection.png"
+  cover: "assets/blog/ppe-detection.jpg"
 }];
 
 

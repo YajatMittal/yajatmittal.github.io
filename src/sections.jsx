@@ -219,8 +219,48 @@ function ProjVideoCover({ id }) {
   // card stays a single link to the project.
   return (
     <div className="proj-cover">
-      <img className="cover-img" src={thumb} alt="" decoding="sync" onLoad={onThumbLoad} />
+      <img className="cover-img" src={thumb} alt="" loading="lazy" decoding="async" onLoad={onThumbLoad} />
       <div className={"cover-yt-mount" + (playing ? " is-playing" : "")} ref={mountRef} />
+    </div>);
+}
+
+// A local looping video cover that only downloads/plays once scrolled near the
+// viewport (the project clips total tens of MB, so eager autoplay made every
+// page load pull all of them at once).
+function ProjFileVideoCover({ cover }) {
+  const videoRef = React.useRef(null);
+  React.useEffect(() => {
+    const el = videoRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        if (!el.src) el.src = cover.video;
+        el.play().catch(() => {});
+      } else {
+        el.pause();
+      }
+    }, { rootMargin: "200px" });
+    io.observe(el);
+    return () => io.disconnect();
+  }, [cover.video]);
+
+  // Some screen-recordings have a baked-in black band (browser chrome) at the
+  // top/bottom. cover.crop = { scale, originY } zooms in to clip those bands.
+  const crop = cover.crop || {};
+  const vStyle = crop.scale ?
+  { transform: `scale(${crop.scale})`, transformOrigin: `center ${crop.originY || "50%"}` } :
+  undefined;
+  return (
+    <div className="proj-cover">
+      <video
+        className="cover-img"
+        style={vStyle}
+        ref={(el) => {videoRef.current = el;if (el) {el.muted = true;el.defaultMuted = true;el.volume = 0;}}}
+        poster={cover.poster}
+        muted
+        loop
+        playsInline
+        preload="none" />
     </div>);
 }
 
@@ -238,31 +278,12 @@ function ProjCover({ cover }) {
     return <ProjVideoCover id={yt} />;
   }
   if (cover.video) {
-    // Some screen-recordings have a baked-in black band (browser chrome) at the
-    // top/bottom. cover.crop = { scale, originY } zooms in to clip those bands.
-    const crop = cover.crop || {};
-    const vStyle = crop.scale ?
-    { transform: `scale(${crop.scale})`, transformOrigin: `center ${crop.originY || "50%"}` } :
-    undefined;
-    return (
-      <div className="proj-cover">
-        <video
-          className="cover-img"
-          style={vStyle}
-          ref={(el) => {if (el) {el.muted = true;el.defaultMuted = true;el.volume = 0;}}}
-          src={cover.video}
-          poster={cover.poster}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata" />
-      </div>);
+    return <ProjFileVideoCover cover={cover} />;
   }
   if (cover.img) {
     return (
       <div className="proj-cover">
-        <img className="cover-img" src={cover.img} alt="" decoding="sync" />
+        <img className="cover-img" src={cover.img} alt="" loading="lazy" decoding="async" />
       </div>);
 
   }
@@ -329,7 +350,7 @@ function Blog() {
         {BLOG.map((b) =>
         <a key={b.title} className="blog-card" href={b.href} target="_blank" rel="noreferrer">
             <div className="blog-cover">
-              <img src={b.cover} alt="" decoding="sync" />
+              <img src={b.cover} alt="" loading="lazy" decoding="async" />
             </div>
             <div>
               <div className="blog-title">{b.title}</div>
