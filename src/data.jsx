@@ -96,6 +96,22 @@ const FEATURED_NAMES = ["SnackTrack", "Tabula", "Memoria"];
 
 const BLOG = [
 {
+  title: "How to Detect Paint Defects with Computer Vision",
+  desc: "How to build an automated paint-defect detection system — training a custom RF-DETR model on 12 types of surface imperfections and deploying it in a visual workflow that identifies, labels, and counts defects.",
+  date: "July 10, 2026",
+  tag: "Computer Vision",
+  href: "https://blog.roboflow.com/detect-paint-defects-with-computer-vision/",
+  cover: "assets/blog/paint-defect-detection.jpg"
+},
+{
+  title: "Dimensional Defect Inspection with Vision AI",
+  desc: "How to catch parts that fall outside size, spacing, or alignment tolerances — using Google Gemini in a Roboflow Workflow to locate mounting holes and Python to measure center-to-center distances against spec.",
+  date: "July 8, 2026",
+  tag: "Computer Vision",
+  href: "https://blog.roboflow.com/dimensional-defect-inspection-with-vision-ai/",
+  cover: "assets/blog/dimensional-defect-inspection.jpg"
+},
+{
   title: "Defect Inspection AI: Automating Quality Control",
   desc: "How computer vision automates manufacturing quality control — pairing object detection with a vision-language model to identify, classify, and report product defects in real time, using PCB inspection as the example.",
   date: "July 1, 2026",
