@@ -8,8 +8,7 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "layout": "regular",
   "fontPair": "sans",
   "headingTracking": 0.06,
-  "headingFont": "newsreader",
-  "cursorFx": "brush"
+  "headingFont": "newsreader"
 } /*EDITMODE-END*/;
 
 const ACCENT_OPTIONS = [
@@ -52,11 +51,15 @@ function applyFontPair(f) {
     body.fontSize = "14.5px";
   }
 }
-function applyCursorFx(mode) {
-  document.documentElement.setAttribute("data-cursorfx", mode || "spotlight");
-}
 
 function Nav({ theme, onThemeToggle, route, onNavigate }) {
+  const [scrolled, setScrolled] = React.useState(false);
+  React.useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
   const links = [
   ["about", "about"],
   ["experience", "experience"],
@@ -64,7 +67,7 @@ function Nav({ theme, onThemeToggle, route, onNavigate }) {
   ["blog", "blogs"]];
 
   return (
-    <div className="nav">
+    <div className={"nav" + (scrolled ? " is-scrolled" : "")}>
       <a className="nav-name" href="#about" onClick={(e) => {e.preventDefault();onNavigate("about");}}>
         yajat<span style={{ opacity: 0.5 }}>.</span>
       </a>
@@ -142,6 +145,16 @@ function VideoLightbox() {
     return () => {document.body.style.overflow = "";};
   }, [id]);
   if (!id) return null;
+  // detail is either a YouTube id (string) or a local clip { src, poster }
+  if (typeof id === "object") {
+    return (
+      <div className="vlb" onClick={() => setId(null)}>
+        <div className="vlb-inner" onClick={(e) => e.stopPropagation()}>
+          <button className="vlb-close" onClick={() => setId(null)} aria-label="Close video">✕</button>
+          <video src={id.src} poster={id.poster} controls autoPlay muted loop playsInline />
+        </div>
+      </div>);
+  }
   const src = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0&modestbranding=1&playsinline=1`;
   return (
     <div className="vlb" onClick={() => setId(null)}>
@@ -181,188 +194,12 @@ function App() {
     const map = { instrument: "var(--font-serif)", newsreader: "var(--font-display)" };
     document.documentElement.style.setProperty("--heading-font", map[t.headingFont] || "var(--font-serif)");
   }, [t.headingFont]);
-  React.useEffect(() => {applyCursorFx(t.cursorFx);}, [t.cursorFx]);
-
-  // Click ripples (only active in "ripple" cursor mode)
-  React.useEffect(() => {
-    if (t.cursorFx !== "ripple") return;
-    const onDown = (e) => {
-      const r = document.createElement("div");
-      r.className = "ripple";
-      r.style.left = e.clientX + "px";
-      r.style.top = e.clientY + "px";
-      document.body.appendChild(r);
-      setTimeout(() => r.remove(), 720);
-    };
-    window.addEventListener("pointerdown", onDown);
-    return () => window.removeEventListener("pointerdown", onDown);
-  }, [t.cursorFx]);
-
-  // Paintbrush light (only active in "brush" cursor mode): draws a glowing,
-  // tapering stroke along the path the cursor travels, fading out behind it.
-  React.useEffect(() => {
-    if (t.cursorFx !== "brush") return;
-    const canvas = document.querySelector(".cursor-brush");
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    let raf = null, dpr = 1, W = 0, H = 0;
-    const LIFE = 600;                 // ms a point lives before it fully fades
-    const MAXW = 15;                  // brush width at the head (px)
-    const MINGAP = 2.4;               // min px between samples (kills clustered blobs)
-    const pts = [];                   // {x, y, t}
-    let cx = -100, cy = -100, seen = false;   // live pointer position (for a steady head glow)
-    const resize = () => {
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
-      W = window.innerWidth; H = window.innerHeight;
-      canvas.width = W * dpr; canvas.height = H * dpr;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    };
-    resize();
-    // Drop samples that are too close together so a slow / paused cursor
-    // doesn't pile up overlapping round dots — it just refreshes the head.
-    const onMove = (e) => {
-      cx = e.clientX; cy = e.clientY; seen = true;
-      const last = pts[pts.length - 1];
-      if (last && Math.hypot(e.clientX - last.x, e.clientY - last.y) < MINGAP) {
-        last.t = performance.now();
-        return;
-      }
-      pts.push({ x: e.clientX, y: e.clientY, t: performance.now() });
-    };
-    const accent = () => getComputedStyle(document.documentElement).getPropertyValue("--accent").trim() || "#e8a13c";
-    // Catmull-Rom: silky interpolation through the raw cursor samples
-    const cr = (a, b, c, d, u) => {
-      const u2 = u * u, u3 = u2 * u;
-      return 0.5 * (2 * b + (-a + c) * u + (2 * a - 5 * b + 4 * c - d) * u2 + (-a + 3 * b - 3 * c + d) * u3);
-    };
-    const edges = (sm, scale) => {
-      const L = [], R = [], m = sm.length;
-      for (let i = 0; i < m; i++) {
-        const a = sm[Math.max(0, i - 1)], b = sm[Math.min(m - 1, i + 1)];
-        const dx = b.x - a.x, dy = b.y - a.y;
-        const len = Math.hypot(dx, dy) || 1;
-        const nx = -dy / len, ny = dx / len, w = sm[i].hw * scale;
-        L.push({ x: sm[i].x + nx * w, y: sm[i].y + ny * w });
-        R.push({ x: sm[i].x - nx * w, y: sm[i].y - ny * w });
-      }
-      return { L, R, m };
-    };
-    const fillRibbon = ({ L, R, m }) => {
-      ctx.beginPath();
-      ctx.moveTo(L[0].x, L[0].y);
-      for (let i = 1; i < m; i++) ctx.lineTo(L[i].x, L[i].y);
-      for (let i = m - 1; i >= 0; i--) ctx.lineTo(R[i].x, R[i].y);
-      ctx.closePath();
-      ctx.fill();
-    };
-    const tick = () => {
-      const now = performance.now();
-      while (pts.length && now - pts[0].t > LIFE) pts.shift();
-      ctx.clearRect(0, 0, W, H);
-      const n = pts.length;
-      const col = accent();
-      if (n >= 3) {
-        // raw half-widths: thick at the head (newest) tapering to nothing at the tail
-        const raw = pts.map((p) => {
-          const f = Math.max(0, 1 - (now - p.t) / LIFE);
-          return { x: p.x, y: p.y, hw: Math.max(0.35, (MAXW * f * f) / 2) };
-        });
-        // resample the centerline with a spline for smooth, organic edges
-        const sm = [];
-        for (let i = 0; i < n - 1; i++) {
-          const p0 = raw[Math.max(0, i - 1)], p1 = raw[i], p2 = raw[i + 1], p3 = raw[Math.min(n - 1, i + 2)];
-          const SEG = 5;
-          for (let s = 0; s < SEG; s++) {
-            const u = s / SEG;
-            sm.push({
-              x: cr(p0.x, p1.x, p2.x, p3.x, u),
-              y: cr(p0.y, p1.y, p2.y, p3.y, u),
-              hw: p1.hw + (p2.hw - p1.hw) * u });
-          }
-        }
-        sm.push(raw[n - 1]);
-
-        ctx.fillStyle = col;
-        ctx.shadowColor = col;
-        // 1) wide soft halo
-        ctx.shadowBlur = 22;
-        ctx.globalAlpha = 0.18;
-        fillRibbon(edges(sm, 1.15));
-        // 2) mid body
-        ctx.shadowBlur = 9;
-        ctx.globalAlpha = 0.5;
-        fillRibbon(edges(sm, 1));
-        // 3) luminous near-white hot core down the centre — reads as actual light
-        ctx.fillStyle = "rgba(255,248,236,0.9)";
-        ctx.shadowColor = "rgba(255,240,210,0.9)";
-        ctx.shadowBlur = 7;
-        ctx.globalAlpha = 0.85;
-        fillRibbon(edges(sm, 0.4));
-      }
-      // Steady glowing bloom at the LIVE cursor — drawn every frame (never blinks),
-      // independent of the trailing stroke, so hovering/holding still keeps the light.
-      if (seen) {
-        const R = MAXW * 0.95;
-        const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, R);
-        g.addColorStop(0, "rgba(255,250,240,0.95)");
-        g.addColorStop(0.4, col);
-        g.addColorStop(1, "rgba(0,0,0,0)");
-        ctx.fillStyle = g;
-        ctx.shadowBlur = 0;
-        ctx.globalAlpha = 1;
-        ctx.beginPath();
-        ctx.arc(cx, cy, R, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.globalAlpha = 1;
-      }
-      raf = requestAnimationFrame(tick);
-    };
-    window.addEventListener("pointermove", onMove, { passive: true });
-    window.addEventListener("resize", resize);
-    raf = requestAnimationFrame(tick);
-    return () => {
-      window.removeEventListener("pointermove", onMove);
-      window.removeEventListener("resize", resize);
-      if (raf) cancelAnimationFrame(raf);
-      ctx.clearRect(0, 0, W, H);
-    };
-  }, [t.cursorFx]);
 
   // Hash-based routing (persists across refresh, back/forward works)
   React.useEffect(() => {
     const onHash = () => setRoute(getRoute());
     window.addEventListener("hashchange", onHash);
     return () => window.removeEventListener("hashchange", onHash);
-  }, []);
-
-  // Cursor-following background (illuminated dot grid + halo)
-  React.useEffect(() => {
-    const root = document.documentElement.style;
-    let raf = null,x = 0,y = 0;
-    const onMove = (e) => {
-      x = e.clientX;y = e.clientY;
-      // reveal the cursor-following glow once the pointer has actually moved
-      document.documentElement.setAttribute("data-pointer-active", "");
-      if (raf) return;
-      raf = requestAnimationFrame(() => {
-        root.setProperty("--mx", x + "px");
-        root.setProperty("--my", y + "px");
-        raf = null;
-      });
-    };
-    // Grow/fill the cursor ring when hovering anything clickable.
-    const CLICKABLE = 'a, button, [role="button"], input:not([type="hidden"]), select, textarea, label, summary, [data-clickable], .clickable';
-    const onOver = (e) => {
-      const hit = e.target.closest && e.target.closest(CLICKABLE);
-      document.documentElement.toggleAttribute("data-cursorhover", !!hit);
-    };
-    window.addEventListener("pointermove", onMove, { passive: true });
-    window.addEventListener("pointerover", onOver, { passive: true });
-    return () => {
-      window.removeEventListener("pointermove", onMove);
-      window.removeEventListener("pointerover", onOver);
-      if (raf) cancelAnimationFrame(raf);
-    };
   }, []);
 
   const navigate = (id) => {
@@ -447,20 +284,6 @@ function App() {
           step={0.002}
           unit="em"
           onChange={(v) => setTweak("headingTracking", v)} />
-        
-        <TweakSection label="Cursor" />
-        <TweakSelect
-          label="Effect"
-          value={t.cursorFx}
-          options={[
-          { value: "spotlight", label: "Spotlight grid" },
-          { value: "gridtrail", label: "Grid + comet trail" },
-          { value: "brush", label: "Light brush" },
-          { value: "glow", label: "Soft glow" },
-          { value: "trail", label: "Comet trail" },
-          { value: "ripple", label: "Click ripple" },
-          { value: "off", label: "None" }]}
-          onChange={(v) => setTweak("cursorFx", v)} />
         
       </TweaksPanel>
     </>);

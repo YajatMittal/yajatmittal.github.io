@@ -39,7 +39,7 @@ function About({ onNavigate }) {
 
       <ul className="bullets">
         <Bullet><b>Building</b> &middot; computer vision pipelines & ML systems</Bullet>
-        <Bullet><b>Writing</b> &middot; technical articles for Roboflow</Bullet>
+        <Bullet><b>Writing</b> &middot; <a className="inline-link" href={LINKS.roboflowBlog} target="_blank" rel="noreferrer">15+ technical tutorials</a> on the Roboflow blog</Bullet>
         <Bullet><b>Learning</b>  · everything from training to deployment</Bullet>
       </ul>
 
@@ -122,6 +122,7 @@ function Experience() {
               <div className="exp-role-title">
                 {e.role}
                 {e.current && <span className="exp-badge" aria-label="current" />}
+                {e.href && <span className="exp-arrow"><Icon.ArrowUpRight /></span>}
               </div>
               <div className="exp-sub">
                 <span className="exp-company">{e.company}</span>
@@ -129,6 +130,10 @@ function Experience() {
               </div>
               <div className="exp-dates">{e.period}</div>
               {e.blurb && <div className="exp-blurb">{e.blurb}</div>}
+              {e.tags &&
+            <div className="exp-tags">
+                  {e.tags.map((t) => <span key={t} className="proj-tag">{t}</span>)}
+                </div>}
             </div>
           </a>
         )}
@@ -246,10 +251,11 @@ function ProjFileVideoCover({ cover }) {
 
   // Some screen-recordings have a baked-in black band (browser chrome) at the
   // top/bottom. cover.crop = { scale, originY } zooms in to clip those bands.
+  // crop.pos sets object-position instead (e.g. "50% 88%" to drop a top band).
   const crop = cover.crop || {};
   const vStyle = crop.scale ?
   { transform: `scale(${crop.scale})`, transformOrigin: `center ${crop.originY || "50%"}` } :
-  undefined;
+  crop.pos ? { objectPosition: crop.pos } : undefined;
   return (
     <div className="proj-cover">
       <video
@@ -312,30 +318,76 @@ function ProjCover({ cover }) {
 
 }
 
+// Open the app-level lightbox on a local project video (full size, with controls).
+function playLocalVideo(cover) {
+  window.dispatchEvent(new CustomEvent("ym:playvideo", { detail: { src: cover.video, poster: cover.poster } }));
+}
+
+function ProjLinks({ p }) {
+  return (
+    <a className="proj-gh" href={p.href} target="_blank" rel="noreferrer">
+      <Icon.Github /> code
+    </a>);
+}
+
+// Big card for projects that have a demo video: the clip autoplays in view,
+// clicking it expands to the full-size player.
+function ShowcaseCard({ p }) {
+  return (
+    <article className="showcase-card">
+      <button className="showcase-media" onClick={() => playLocalVideo(p.cover)} aria-label={`Watch ${p.name} demo`}>
+        <ProjFileVideoCover cover={p.cover.showcaseCrop ? { ...p.cover, crop: p.cover.showcaseCrop } : p.cover} />
+        <span className="showcase-expand"><Icon.Play /> watch</span>
+      </button>
+      <div className="showcase-body">
+        <div className="showcase-head">
+          <div>
+            <h3 className="showcase-title">{p.name}</h3>
+            <div className="showcase-tagline">{p.tagline}</div>
+          </div>
+          <ProjLinks p={p} />
+        </div>
+        <p className="showcase-desc">{p.desc}</p>
+        <div className="proj-tags">
+          {p.tags.map((t) => <span key={t} className="proj-tag">{t}</span>)}
+        </div>
+      </div>
+    </article>);
+}
+
+function GridCard({ p }) {
+  return (
+    <a className="grid-card" href={p.href} target="_blank" rel="noreferrer">
+      <ProjCover cover={p.cover} />
+      <div className="grid-body">
+        <div className="grid-title-row">
+          <div className="grid-title">{p.name}</div>
+          <span className="grid-arrow"><Icon.ArrowUpRight /></span>
+        </div>
+        <div className="grid-tagline">{p.tagline}</div>
+        <div className="proj-tags">
+          {p.tags.map((t) => <span key={t} className="proj-tag">{t}</span>)}
+        </div>
+      </div>
+    </a>);
+}
+
 function Projects() {
+  const withVideo = PROJECTS.filter((p) => p.cover && p.cover.video);
+  const rest = PROJECTS.filter((p) => !(p.cover && p.cover.video));
   return (
     <section className="section" id="projects">
       <SectionHead label="projects" />
-      <div className="proj-list">
-        {PROJECTS.map((p) =>
-        <a key={p.name} className="proj-card" href={p.href} target="_blank" rel="noreferrer">
-            <ProjCover cover={p.cover} />
-            <div className="proj-body">
-              <div className="proj-title-row">
-                <div className="proj-title" style={{ fontFamily: "Newsreader" }}>{p.name}</div>
-                <div className="proj-actions">
-                  <span className="proj-action" aria-label="github"><Icon.Github /></span>
-                  <span className="proj-action" aria-label="open"><Icon.External /></span>
-                </div>
-              </div>
-              <div className="proj-desc">{p.desc}</div>
-              <div className="proj-tags">
-                {p.tags.map((t) => <span key={t} className="proj-tag">{t}</span>)}
-              </div>
-            </div>
-          </a>
-        )}
+      <div className="showcase-list">
+        {withVideo.map((p) => <ShowcaseCard key={p.name} p={p} />)}
       </div>
+      {rest.length > 0 &&
+      <>
+          <div className="blog-list-head proj-more-head">more projects</div>
+          <div className="proj-grid">
+            {rest.map((p) => <GridCard key={p.name} p={p} />)}
+          </div>
+        </>}
     </section>);
 
 }
@@ -346,6 +398,15 @@ function Blog() {
   return (
     <section className="section" id="blog">
       <SectionHead label="blogs" />
+      <a className="blog-callout" href={LINKS.roboflowBlog} target="_blank" rel="noreferrer">
+        <img className="blog-callout-logo" src="assets/icons/roboflow.png" alt="" />
+        <div className="blog-callout-body">
+          <div className="blog-callout-title">Most of my writing lives on the Roboflow blog</div>
+          <div className="blog-callout-sub">15+ tutorials on production computer vision · RF-DETR, SAM 3, VLMs, Workflows</div>
+        </div>
+        <span className="blog-callout-cta">view all <Icon.ArrowUpRight /></span>
+      </a>
+      <div className="blog-list-head">recent posts</div>
       <div className="blog-list">
         {BLOG.map((b) =>
         <a key={b.title} className="blog-card" href={b.href} target="_blank" rel="noreferrer">
@@ -354,6 +415,7 @@ function Blog() {
             </div>
             <div>
               <div className="blog-title">{b.title}</div>
+              {b.desc && <div className="blog-desc">{b.desc}</div>}
               <div className="blog-meta">
                 <span className="pub">{b.tag}</span>
                 <span>·</span>
@@ -364,6 +426,9 @@ function Blog() {
           </a>
         )}
       </div>
+      <a className="blog-more" href={LINKS.roboflowBlog} target="_blank" rel="noreferrer">
+        see every article on roboflow.com <Icon.ArrowUpRight />
+      </a>
     </section>);
 
 }

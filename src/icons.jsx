@@ -41,6 +41,11 @@ const Icon = {
       <path d="M7 17L17 7M9 7h8v8" />
     </svg>,
 
+  Play: (props) =>
+  <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
+      <path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z" />
+    </svg>,
+
   ArrowUpRight: (props) =>
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" {...props}>
       <path d="M7 17L17 7M9 7h8v8" />

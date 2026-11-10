@@ -7,7 +7,7 @@ const ABOUT = {
   <>
       I’m an 18-year-old working at the intersection of  <b>computer vision</b>, <b>machine learning</b>, and <b>real-world applications</b>.
 
- Incoming   <a href="https://uwaterloo.ca/computer-science/" target="_blank" rel="noreferrer"><b><span className="nobreak"><img className="inline-logo coin" src="assets/icons/waterloo.png" alt="" />CS</span> @ University of Waterloo</b></a>, and currently a contributor at   <a href="https://blog.roboflow.com/author/yajat/" target="_blank" rel="noreferrer"><span className="nobreak"><img className="inline-logo round" src="assets/icons/roboflow.png" alt="" />Roboflow</span></a>, writing technical tutorials on computer vision projects. 
+ Incoming   <a href="https://uwaterloo.ca/computer-science/" target="_blank" rel="noreferrer"><b><span className="nobreak"><img className="inline-logo coin" src="assets/icons/waterloo.png" alt="" />CS</span> @ University of Waterloo</b></a>, and currently a contributor at   <a href="https://roboflow.com/blog/author/yajat" target="_blank" rel="noreferrer"><span className="nobreak"><img className="inline-logo round" src="assets/icons/roboflow.png" alt="" />Roboflow</span></a>, writing technical tutorials on computer vision projects. 
     </>,
 
   skills: [
@@ -21,21 +21,34 @@ const ABOUT = {
 
 const EXPERIENCE = [
 {
-  role: "Contributing Writer",
+  role: "Computer Vision Contributor",
   company: "Roboflow",
-  type: "Computer Vision",
+  type: "Remote",
   period: "May 2026 — Present",
   current: true,
-  blurb: "Writing technical tutorials and articles on computer vision.",
+  blurb: "Writing tutorials on production computer vision — training RF-DETR models (90%+ mAP) and building agentic vision Workflows.",
+
+  tags: ["RF-DETR", "SAM 3", "Gemini", "ByteTrack", "Python"],
   logo: { type: "img", src: "assets/icons/roboflow.png" },
-  href: "https://blog.roboflow.com/author/contributing-writer/"
+  href: "https://roboflow.com/blog/author/yajat"
+},
+{
+  role: "Software Engineering Intern",
+  company: "TMAS Academy",
+  type: "Brampton, ON",
+  period: "Jun 2025 — Oct 2025",
+  blurb: "Built the quiz feature (100+ students) and streaming chat UI for an AI tutor that explains answers with Manim animations.",
+
+  tags: ["React", "TypeScript", "Tailwind CSS", "Manim"],
+  logo: { type: "img", src: "assets/icons/tmas.png" },
+  href: "https://tmasacademy.com/"
 },
 {
   role: "Peel Student Advisory Committee Member",
   company: "Peel District School Board",
   type: "On-Call",
   period: "Nov 2024 — May 2026",
-  blurb: "Organizing STEAM initiatives across Peel — competitions and hackathons like VEX IQ PDSB 2025.",
+  blurb: "Organized STEAM competitions and hackathons across Peel, like VEX IQ PDSB 2025.",
   logo: { type: "img", src: "assets/icons/peel.jpeg", round: true }
 }];
 
@@ -47,7 +60,7 @@ const PROJECTS = [
   tagline: "Real-time snack detection · Roboflow + Flask",
   tags: ["Python", "Flask", "OpenCV", "Roboflow"],
   href: "https://github.com/YajatMittal/SnackTrack",
-  cover: { video: "assets/projects/videos/SnackTrack.mp4", poster: "assets/projects/images/snacktrack.jpg", crop: { scale: 1.12, originY: "34%" } }
+  cover: { video: "assets/projects/videos/SnackTrack.mp4", poster: "assets/projects/images/snacktrack.jpg", crop: { scale: 1.12, originY: "34%" }, showcaseCrop: { pos: "50% 100%" } }
 },
 {
   name: "Memoria",
@@ -149,6 +162,7 @@ const LINKS = {
   github: "https://github.com/YajatMittal",
   linkedin: "https://www.linkedin.com/in/yajat-mittal/",
   email: "mailto:yajat.mittal@uwaterloo.ca",
+  roboflowBlog: "https://roboflow.com/blog/author/yajat",
   resume: "https://drive.google.com/file/d/19ouDkG2wQFw77IC9h8b9BZ9v6bjJYl47/view?usp=sharing"
 };
 
