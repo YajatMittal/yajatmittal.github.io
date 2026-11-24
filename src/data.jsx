@@ -55,6 +55,23 @@ const EXPERIENCE = [
 
 const PROJECTS = [
 {
+  name: "Anything Kart",
+  desc: "A browser kart racer where whatever you're holding becomes your steering wheel. Hold up a banana, a book, or a TV remote to your webcam and turn it like a wheel; flick it to fire items. Hand tracking runs entirely on-device, with three tracks, CPU racers, and two-player split screen on a single webcam.",
+  tagline: "Steer with anything · webcam kart racer",
+  tags: ["JavaScript", "Three.js", "Hand Tracking", "Vite"],
+  href: "https://github.com/YajatMittal/anything-kart",
+  demo: "https://anything-kart.vercel.app/",
+  cover: { video: "assets/projects/videos/anything-kart.mp4", poster: "assets/projects/images/anything-kart.jpg" }
+},
+{
+  name: "Tabula",
+  desc: "An end-to-end pipeline that turns a single top-down photo of a breadboard into ready-to-fabricate PCB files. OpenCV reconstructs the grid, a Roboflow model plus Gemini identify components, and KiCad schematics are synthesized and auto-routed.",
+  tagline: "Breadboard photo → PCB · EurekaHacks",
+  tags: ["Python", "Computer Vision", "Gemini", "React"],
+  href: "https://github.com/YajatMittal/Tabula",
+  cover: { video: "assets/projects/videos/tabula.mp4", poster: "assets/projects/images/tabula.jpg", crop: { scale: 1.05, originY: "100%" } }
+},
+{
   name: "SnackTrack",
   desc: "A real-time snack tracker that rewards healthy eating. MediaPipe finds your face and mouth while a custom-trained Roboflow model spots apples and cookies on the live webcam feed — eat an apple to gain points, a cookie to lose them.",
   tagline: "Real-time snack detection · Roboflow + Flask",
@@ -68,15 +85,7 @@ const PROJECTS = [
   tagline: "AI memory support · Alzheimer's care",
   tags: ["AI", "Computer Vision", "Healthcare"],
   href: "https://github.com/YajatMittal/Memoria",
-  cover: { img: "assets/projects/images/memoria.png" }
-},
-{
-  name: "Tabula",
-  desc: "An end-to-end pipeline that turns a single top-down photo of a breadboard into ready-to-fabricate PCB files. OpenCV reconstructs the grid, a Roboflow model plus Gemini identify components, and KiCad schematics are synthesized and auto-routed.",
-  tagline: "Breadboard photo → PCB · EurekaHacks",
-  tags: ["Python", "Computer Vision", "Gemini", "React"],
-  href: "https://github.com/YajatMittal/Tabula",
-  cover: { video: "assets/projects/videos/tabula.mp4", poster: "assets/projects/images/tabula.jpg", crop: { scale: 1.05, originY: "100%" } }
+  cover: { video: "assets/projects/videos/memoria.mp4", poster: "assets/projects/images/memoria.jpg" }
 },
 {
   name: "Flappy Fitness",
@@ -92,6 +101,7 @@ const PROJECTS = [
   tagline: "Native iOS weather app · Swift",
   tags: ["Swift", "iOS", "UIKit", "API"],
   href: "https://github.com/YajatMittal/WeatherSphere",
+  more: true,
   cover: { video: "assets/projects/videos/WeatherSphere.mp4", poster: "assets/projects/images/weathersphere.jpg" }
 },
 {
@@ -104,7 +114,7 @@ const PROJECTS = [
 }];
 
 // Which projects appear in the "featured" strip on the home page, in this order.
-const FEATURED_NAMES = ["SnackTrack", "Tabula", "Memoria"];
+const FEATURED_NAMES = ["Anything Kart", "Tabula", "SnackTrack"];
 
 
 const BLOG = [

@@ -325,9 +325,15 @@ function playLocalVideo(cover) {
 
 function ProjLinks({ p }) {
   return (
-    <a className="proj-gh" href={p.href} target="_blank" rel="noreferrer">
-      <Icon.Github /> code
-    </a>);
+    <div className="proj-links">
+      {p.demo &&
+      <a className="proj-gh" href={p.demo} target="_blank" rel="noreferrer">
+          <Icon.Play /> play
+        </a>}
+      <a className="proj-gh" href={p.href} target="_blank" rel="noreferrer">
+        <Icon.Github /> code
+      </a>
+    </div>);
 }
 
 // Big card for projects that have a demo video: the clip autoplays in view,
@@ -373,8 +379,10 @@ function GridCard({ p }) {
 }
 
 function Projects() {
-  const withVideo = PROJECTS.filter((p) => p.cover && p.cover.video);
-  const rest = PROJECTS.filter((p) => !(p.cover && p.cover.video));
+  // Projects with a demo video get a big showcase card, unless marked `more: true`.
+  const isShowcase = (p) => p.cover && p.cover.video && !p.more;
+  const withVideo = PROJECTS.filter(isShowcase);
+  const rest = PROJECTS.filter((p) => !isShowcase(p));
   return (
     <section className="section" id="projects">
       <SectionHead label="projects" />

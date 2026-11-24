@@ -712,6 +712,7 @@
     transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
   }
   .proj-gh svg { width: 13px; height: 13px; }
+  .proj-links { display: flex; gap: 8px; flex-shrink: 0; }
   .proj-gh:hover { color: var(--fg); border-color: var(--accent); background: var(--accent-soft); }
 
   .proj-more-head { margin-top: 40px; }

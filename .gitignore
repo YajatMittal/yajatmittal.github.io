@@ -11,3 +11,6 @@ CLAUDE.md
 
 # Claude Code local config
 .claude/
+
+# Uncompressed source videos (too large for GitHub)
+assets/projects/videos/originals/
